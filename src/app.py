@@ -21,6 +21,42 @@ app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
 
 # In-memory activity database
 activities = {
+        "Basketball Team": {
+            "description": "Play basketball games and improve athletic skills",
+            "schedule": "Mondays and Wednesdays, 4:00 PM - 5:30 PM",
+            "max_participants": 15,
+            "participants": []
+        },
+        "Soccer Club": {
+            "description": "Practice soccer techniques and participate in friendly matches",
+            "schedule": "Tuesdays and Thursdays, 3:00 PM - 4:30 PM",
+            "max_participants": 22,
+            "participants": []
+        },
+        "Art Club": {
+            "description": "Create art using various mediums and express creativity",
+            "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+            "max_participants": 10,
+            "participants": []
+        },
+        "Drama Club": {
+            "description": "Rehearse and perform theatrical productions",
+            "schedule": "Fridays, 4:00 PM - 6:00 PM",
+            "max_participants": 15,
+            "participants": []
+        },
+        "Debate Club": {
+            "description": "Engage in debates on current topics and build critical thinking",
+            "schedule": "Thursdays, 3:30 PM - 4:30 PM",
+            "max_participants": 12,
+            "participants": []
+        },
+        "Science Club": {
+            "description": "Explore scientific concepts through experiments and projects",
+            "schedule": "Tuesdays, 3:00 PM - 4:00 PM",
+            "max_participants": 18,
+            "participants": []
+        },
     "Chess Club": {
         "description": "Learn strategies and compete in chess tournaments",
         "schedule": "Fridays, 3:30 PM - 5:00 PM",
@@ -61,6 +97,10 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Get the specific activity
     activity = activities[activity_name]
+
+    # Validate student is not already signed up
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Student already signed up")
 
     # Add student
     activity["participants"].append(email)
